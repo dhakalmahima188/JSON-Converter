@@ -32,6 +32,7 @@ function generatePayload(schema, emails, tag,listid) {
 }
 
 app.post('/send-email', (req, res) => {
+    console.log("Inside send-email")
     const { clientschema, tag ,listid,emails,update_existing} = req.body;
     console.log("HERE",clientschema.fields.tags, emails,clientschema.fields.status,clientschema.update_existing)
     if (!clientschema) {
@@ -40,6 +41,18 @@ app.post('/send-email', (req, res) => {
     const payload = generatePayload(clientschema, emails, tag,listid);
     console.log("Payload:", JSON.stringify(payload));
     res.send(JSON.stringify(payload));
+});
+
+app.post('/parseData', (req, res) => {
+    console.log("InsideAPrseDAta")
+    const { emails} = req.body;
+    console.log("HERE",emails)
+    if (!emails) {
+        return res.status(400).send({ error: 'Invalid request.' });
+    }
+    const emailList  = data.map(item => item.email[0]);
+    console.log("Payload:", emailList);
+    res.send(emailList);
 });
 
 app.listen(port, () => {

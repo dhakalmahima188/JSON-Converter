@@ -46,6 +46,24 @@ router.post('/send-email', async ({ request }) => {
 });
 
 
+router.post('/parseData', async ({ request }) => {
+    try {
+        const { emails } = await request.json();
+   
+        if (!emails) {
+            return new Response(JSON.stringify({ error: 'Invalid request.' }), { status: 400 });
+        }
+        const parsedEmails = JSON.parse(JSON.stringify(emails))
+        const emailList  = parsedEmails.map(item => item.email[0]);
+        console.log("Payload:", emailList);
+        return new Response(JSON.stringify(emailList), { headers: { 'Content-Type': 'application/json' } });
+    } catch (error) {
+        return new Response(JSON.stringify({ error: 'Failed to parse JSON.' }), { status: 400 });
+    }
+});
+
+
+
 addEventListener('fetch', event => {
     event.respondWith(router.handle(event.request));
 });

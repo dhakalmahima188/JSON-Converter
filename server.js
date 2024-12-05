@@ -41,8 +41,20 @@ app.post('/send-email', (req, res) => {
     res.send(JSON.stringify(payload));
 });
 
+app.post('/parseData', (req, res) => {
+    console.log("InsideAPrseDAta")
+    const { emails} = req.body;
+    console.log("HERE",emails)
+    if (!emails) {
+        return res.status(400).send({ error: 'Invalid request.' });
+    }
+    const emailList  = data.map(item => item.email[0]);
+    console.log("Payload:", emailList);
+    res.send(emailList);
+});
+
 app.listen(port, () => {
-    console.log(`Server listening at http://localhost:${port}`);
+    console.log(` local Server listening at http://localhost:${port}`);
 });
 
 
