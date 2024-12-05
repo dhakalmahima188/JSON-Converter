@@ -53,7 +53,7 @@ router.post('/parseData', async ({ request }) => {
         if (!emails) {
             return new Response(JSON.stringify({ error: 'Invalid request.' }), { status: 400 });
         }
-        const parsedEmails = JSON.parse(JSON.stringify(emails))
+        const parsedEmails = JSON.parse(emails)
         const emailList  = parsedEmails.map(item => item.email[0]);
         console.log("Payload:", emailList);
         return new Response(JSON.stringify(emailList), { headers: { 'Content-Type': 'application/json' } });
