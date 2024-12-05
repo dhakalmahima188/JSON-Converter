@@ -50,8 +50,7 @@ app.post('/parseData', (req, res) => {
     if (!emails) {
         return res.status(400).send({ error: 'Invalid request.' });
     }
-    const parsedEmails = JSON.parse(emails)
-    const emailList  = parsedEmails.map(item => item.email[0]);
+    const emailList  = emails.map(item => item.email[0]);
     console.log("PayloadLocal:", emailList);
     res.send(emailList);
 });

@@ -9,7 +9,7 @@
     return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
   };
 
-  // .wrangler/tmp/bundle-34lCYX/checked-fetch.js
+  // .wrangler/tmp/bundle-CJr2hW/checked-fetch.js
   function checkURL(request, init) {
     const url = request instanceof URL ? request : new URL(
       (typeof request === "string" ? new Request(request, init) : request).url
@@ -27,7 +27,7 @@
   }
   var urls;
   var init_checked_fetch = __esm({
-    ".wrangler/tmp/bundle-34lCYX/checked-fetch.js"() {
+    ".wrangler/tmp/bundle-CJr2hW/checked-fetch.js"() {
       urls = /* @__PURE__ */ new Set();
       __name(checkURL, "checkURL");
       globalThis.fetch = new Proxy(globalThis.fetch, {
@@ -331,9 +331,9 @@
     }
   });
 
-  // .wrangler/tmp/bundle-34lCYX/middleware-insertion-facade.js
+  // .wrangler/tmp/bundle-CJr2hW/middleware-insertion-facade.js
   var init_middleware_insertion_facade = __esm({
-    ".wrangler/tmp/bundle-34lCYX/middleware-insertion-facade.js"() {
+    ".wrangler/tmp/bundle-CJr2hW/middleware-insertion-facade.js"() {
       init_loader_sw();
       init_middleware_ensure_req_body_drained();
       init_middleware_miniflare3_json_error();
@@ -1156,14 +1156,15 @@
   router.post("/parseData", async ({ request }) => {
     try {
       const { emails } = await request.json();
-      console.log("emails", emails, typeof emails);
-      if (!emails) {
-        return new Response(JSON.stringify({ error: "Invalid request." }), { status: 400 });
-      }
-      const parsedEmails = JSON.parse(emails);
-      const emailList = parsedEmails.map((item) => item.email[0]);
+      console.log("emailsNew", emails, typeof emails);
+      const emailList = emails.map((item) => {
+        console.log(JSON.stringify(item.email[0]));
+        return item.email[0];
+      });
       console.log("Payload:", emailList);
-      return new Response(JSON.stringify(emailList), { headers: { "Content-Type": "application/json" } });
+      return new Response(JSON.stringify(emailList), {
+        headers: { "Content-Type": "application/json" }
+      });
     } catch (error) {
       return new Response(JSON.stringify({ error }), { status: 400 });
     }
