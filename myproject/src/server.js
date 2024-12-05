@@ -44,14 +44,15 @@ app.post('/send-email', (req, res) => {
 });
 
 app.post('/parseData', (req, res) => {
-    console.log("InsideAPrseDAta")
+    console.log("InsideAPrseDAta....")
     const { emails} = req.body;
-    console.log("HERE",emails)
+   
     if (!emails) {
         return res.status(400).send({ error: 'Invalid request.' });
     }
-    const emailList  = data.map(item => item.email[0]);
-    console.log("Payload:", emailList);
+    const parsedEmails = JSON.parse(emails)
+    const emailList  = parsedEmails.map(item => item.email[0]);
+    console.log("PayloadLocal:", emailList);
     res.send(emailList);
 });
 

@@ -49,6 +49,7 @@ router.post('/send-email', async ({ request }) => {
 router.post('/parseData', async ({ request }) => {
     try {
         const { emails } = await request.json();
+        console.log('emails',emails,typeof(emails))
    
         if (!emails) {
             return new Response(JSON.stringify({ error: 'Invalid request.' }), { status: 400 });
@@ -58,7 +59,7 @@ router.post('/parseData', async ({ request }) => {
         console.log("Payload:", emailList);
         return new Response(JSON.stringify(emailList), { headers: { 'Content-Type': 'application/json' } });
     } catch (error) {
-        return new Response(JSON.stringify({ error: 'Failed to parse JSON.' }), { status: 400 });
+        return new Response(JSON.stringify({ error: error }), { status: 400 });
     }
 });
 
